@@ -4,7 +4,7 @@
 # CPython
 **/__pycache__/**
 *.pyc
-**/.venv/**
+/.venv/
 
 # pytest
 **/.pytest_cache/
@@ -12,3 +12,7 @@
 # others
 tmp
 .cache
+
+# secrets
+/secrets/
+/tokens/
