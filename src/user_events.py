@@ -3,31 +3,31 @@ import requests
 
 
 URL_GITHUB_API = "https://api.github.com/"
-JSON_PATH = ".//tokens//token.json"
+#JSON_PATH = ".//tokens//token.json"
 
 
-def read_json_authorization(json_path=JSON_PATH):
-    """
-    Read json file to get token.
-    """
-    try:
-        with open(json_path, "rt", encoding="utf-8") as f:
-            json_token = f.read()
-    except OSError as err:
-        print("OS error:", err)
-    finally:
-        f.close()
+#def read_json_authorization(json_path=JSON_PATH):
+#    """
+#    Read json file to get token.
+#    """
+#    try:
+#        with open(json_path, "rt", encoding="utf-8") as f:
+#            json_token = f.read()
+#    except OSError as err:
+#        print("OS error:", err)
+#    finally:
+#        f.close()
+#
+#    client_json_token = json.loads(json_token)
+#    client_id, client_token = client_json_token["id"], client_json_token#["token"]
+#
+#    return (client_id, client_token)
+#
+## asignment id and token
+#your_id, your_token = *read_json_authorization(),
 
-    client_json_token = json.loads(json_token)
-    client_id, client_token = client_json_token["id"], client_json_token["token"]
 
-    return (client_id, client_token)
-
-# asignment id and token
-your_id, your_token = *read_json_authorization(),
-
-
-def user_public_events(username="cireu", your_token=your_token):
+def user_public_events(username="cireu"):
     if username is None:
         raise ValueError("username must be not none.")
     elif username is False:
@@ -36,8 +36,8 @@ def user_public_events(username="cireu", your_token=your_token):
         url_concate = URL_GITHUB_API + f'users/{username}/events/public'
 
     headers={
-        "Accept": "application/vnd.github+json", 
-        "Authorization": f"token {your_token}", 
+        "Accept": "application/vnd.github+json",   # `vnd.github`到底什么意思，不过可以换成 `application/json` 
+        #"Authorization": f"token {your_token}", 
         'X-GitHub-Api-Version': '2022-11-28'
         }
 
@@ -54,3 +54,4 @@ def user_public_events(username="cireu", your_token=your_token):
 # Execute when the module is not initialized from an import statement.
 if __name__ == '__main__':
     print(json.dumps(user_public_events(input("Input Github username: ")), indent=4))
+    print("Finished.")
