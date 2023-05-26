@@ -65,5 +65,5 @@ def main():
     return 0
 
 # Execute when the module is not initialized from an import statement.
-if __name__ == '__main__':
-    sys.exit(main())
+# if __name__ == '__main__':
+#     sys.exit(main())
