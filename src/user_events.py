@@ -1,5 +1,6 @@
 import json
 import requests
+import sys
 
 
 URL_GITHUB_API = "https://api.github.com/"
@@ -50,9 +51,7 @@ def user_public_events(username="cireu"):
         else:
             return f"{r.status_code}, {r.json()['message']}"
 
-
-# Execute when the module is not initialized from an import statement.
-if __name__ == '__main__':
+def main():
     input_name = input("Input Github username: ")
     try:
         if requests.get(URL_GITHUB_API + f'users/{input_name}').status_code != 200:
@@ -62,5 +61,9 @@ if __name__ == '__main__':
     else:
         print(user_public_events(input_name))
     finally:
-        print(" ")
-        print("Finished.")
+        print("\r\nFinished.")
+    return 0
+
+# Execute when the module is not initialized from an import statement.
+if __name__ == '__main__':
+    sys.exit(main())
