@@ -1,6 +1,7 @@
+import sys
 import json
 import requests
-import sys
+from requests import HTTPError, TooManyRedirects
 
 
 URL_GITHUB_API = "https://api.github.com/"
@@ -54,10 +55,15 @@ def user_public_events(username="cireu"):
 def main():
     input_name = input("Input Github username: ")
     try:
-        if requests.get(URL_GITHUB_API + f'users/{input_name}').status_code != 200:
-            raise ValueError("status error.")
-    except ValueError:
-        print("The username is not found in Github.")
+        r = requests.get(URL_GITHUB_API + f'users/{input_name}')
+        r.raise_for_status()
+    except ConnectionError as CE:
+        raise CE
+    except HTTPError as HE:
+        print("HTTPError, The username is not found in Github.")
+        raise HE
+    except TooManyRedirects as TMR:
+        raise TMR
     else:
         print(user_public_events(input_name))
     finally:
