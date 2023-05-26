@@ -53,5 +53,14 @@ def user_public_events(username="cireu"):
 
 # Execute when the module is not initialized from an import statement.
 if __name__ == '__main__':
-    print(json.dumps(user_public_events(input("Input Github username: ")), indent=4))
-    print("Finished.")
+    input_name = input("Input Github username: ")
+    try:
+        if requests.get(URL_GITHUB_API + f'users/{input_name}').status_code != 200:
+            raise ValueError("status error.")
+    except ValueError:
+        print("The username is not found in Github.")
+    else:
+        print(user_public_events(input_name))
+    finally:
+        print(" ")
+        print("Finished.")
