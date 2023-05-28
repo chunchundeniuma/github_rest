@@ -1,4 +1,4 @@
-import sys
+#import sys
 import json
 import requests
 from requests import HTTPError, TooManyRedirects
@@ -46,7 +46,7 @@ def user_public_events(username="cireu"):
     # r = requests.get(url=url_concate, headers=headers)
     with requests.request(method='get', url=url_concate, headers=headers) as r:
         if r.status_code == requests.codes.ok:
-            return r.json()  # maybe change.
+            return json.dumps(r.json(), indent=4)  # maybe change.
         elif r.status_code in [403, 404]:
             return f"""{r.status_code}, {r.json()['message']}, \nmaybe you try to use a REST API endpoint without a token, \nor with a token that has insufficient permissions."""
         else:
@@ -56,12 +56,9 @@ def main():
     input_name = input("Input Github username: ")
     try:
         r = requests.get(URL_GITHUB_API + f'users/{input_name}')
-        r.raise_for_status()
+        # r.raise_for_status()
     except ConnectionError as CE:
         raise CE
-    except HTTPError as HE:
-        print("HTTPError, The username is not found in Github.")
-        raise HE
     except TooManyRedirects as TMR:
         raise TMR
     else:
