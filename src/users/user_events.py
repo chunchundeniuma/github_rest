@@ -8,6 +8,7 @@ URL_GITHUB_API = "https://api.github.com/"
 #JSON_PATH = ".//tokens//token.json"
 
 
+# 暂时没卵用，因为好像不用token也能访问部分数据，私密数据访问token有权限访问的部分，其余看不到
 #def read_json_authorization(json_path=JSON_PATH):
 #    """
 #    Read json file to get token.
@@ -30,6 +31,9 @@ URL_GITHUB_API = "https://api.github.com/"
 
 
 def user_public_events(username="cireu"):
+    """
+    Get people in Github public events then output it in standard output.
+    """
     if username is None:
         raise ValueError("username must be not none.")
     elif username is False:
@@ -43,7 +47,7 @@ def user_public_events(username="cireu"):
         'X-GitHub-Api-Version': '2022-11-28'
         }
 
-    # r = requests.get(url=url_concate, headers=headers)
+    # with 语句可以省略 r.close()
     with requests.request(method='get', url=url_concate, headers=headers) as r:
         if r.status_code == requests.codes.ok:
             return json.dumps(r.json(), indent=4)  # maybe change.
@@ -61,6 +65,8 @@ def main():
         raise CE
     except TooManyRedirects as TMR:
         raise TMR
+    except HTTPError as HE:
+        raise HE
     else:
         print(user_public_events(input_name))
     finally:

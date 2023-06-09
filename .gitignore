@@ -14,5 +14,7 @@ tmp
 .cache
 
 # secrets
-/secrets/
 /tokens/
+
+# others archived old file
+/src/old/
