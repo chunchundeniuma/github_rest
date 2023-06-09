@@ -53,7 +53,7 @@ def user_public_events(username="cireu"):
             return f"{r.status_code}, {r.json()['message']}"
 
 def main():
-    input_name = input("Input Github username: ")
+    input_name = input("Input Github username: ") or 'cireu'
     try:
         r = requests.get(URL_GITHUB_API + f'users/{input_name}')
         # r.raise_for_status()
